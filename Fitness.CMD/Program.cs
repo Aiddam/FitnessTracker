@@ -1,5 +1,6 @@
 ﻿
-using Fitness_Tracker.BL.Controller;
+using FitnessTracker.BL.Controller;
+using FitnessTracker.BL.Model;
 
 class Program
 {
@@ -11,6 +12,7 @@ class Program
         var name = Console.ReadLine();
 
         var userController = new UserController(name);
+        var eatingController = new EatingController(userController.CurrentUser);
         if (userController.IsNewUser)
         {
             Console.Write("\n\nВведите пол - ");
@@ -25,6 +27,39 @@ class Program
         }
 
         Console.WriteLine(userController.CurrentUser);
+
+        Console.WriteLine("Что вы хотите сделать?");
+        Console.WriteLine("E - ввести прием пищи");
+        var key = Console.ReadKey();
+        Console.WriteLine();
+        if (key.Key == ConsoleKey.E)
+        {
+            var foods = EnterEating();
+            eatingController.Add(foods.Food,foods.Weight);
+
+            foreach (var item in eatingController.Eating.Foods)
+            {
+                Console.WriteLine($"\t{item.Key} - {item.Value}");
+            }
+        
+        }
+
+    }
+
+    private static (Food Food,double Weight) EnterEating()
+    {
+        Console.WriteLine("Enter name of product - ");
+        var food = Console.ReadLine();
+
+        var calories = ParseDouble("калорийность");
+        var proteins = ParseDouble("протеины");
+        var fats = ParseDouble("жиры");
+        var carbs = ParseDouble("углеводы");
+
+        var weight = ParseDouble("вес");
+        var product = new Food(food,calories,proteins,fats,carbs);
+
+        return (product, weight);
 
 
     }

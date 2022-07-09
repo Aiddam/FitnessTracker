@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FitnessTracker.BL.Controller;
 
 namespace Fitness_Tracker.BL.Controller.Tests
 {

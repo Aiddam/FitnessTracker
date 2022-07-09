@@ -1,18 +1,20 @@
-﻿using System;
+﻿using FitnessTracker.BL.Model;
+using System;
 using System.Runtime.Serialization.Formatters.Binary;
-using Fitness_Tracker.BL.Model;
 
-namespace Fitness_Tracker.BL.Controller
+
+namespace FitnessTracker.BL.Controller
 {
     /// <summary>
     /// Контроллер пользователя
     /// </summary>
-    public class UserController
+    public class UserController : ControllerBase
     {
         /// <summary>
         /// Пользователя приложения
         /// </summary>
         public List<User> Users { get; }
+        private const string USER_FILE_NAME = "users.dat";
         public User CurrentUser { get; }
         public bool IsNewUser { get; } = false;
         /// <summary>
@@ -20,7 +22,7 @@ namespace Fitness_Tracker.BL.Controller
         /// </summary>
         /// <param name="user"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public UserController(string userName)
+        public UserController(string userName) 
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
@@ -44,20 +46,7 @@ namespace Fitness_Tracker.BL.Controller
         /// <returns></returns>
         private List<User> GetUsersData()
         {
-            var formatter = new BinaryFormatter();
-            using (var fileStream = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                if (fileStream.Length>0&&formatter.Deserialize(fileStream) is List<User> users)
-                {
-                    return users;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-                //TODO: Что делать если пользователя не прочитали?
-            }
-
+            return Load<List<User>>(USER_FILE_NAME) ?? new List<User>();
         }
 
         public void SetNewUserData(string genderName, DateTime birthDate, double weight = 1, double height = 1)
@@ -74,11 +63,8 @@ namespace Fitness_Tracker.BL.Controller
         /// </summary>
         public void Save()
         {
-            var formatter = new BinaryFormatter();
-            using (var fileStream = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fileStream, Users);
-            }
+            Save(USER_FILE_NAME, Users);
+          
         }
         /// <summary>
         /// Загрузить данные пользователя

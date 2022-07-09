@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Fitness_Tracker.BL.Model
+namespace FitnessTracker.BL.Model
 {
     /// <summary>
     ///     Пол
