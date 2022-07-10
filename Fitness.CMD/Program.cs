@@ -1,13 +1,19 @@
 ﻿
 using FitnessTracker.BL.Controller;
 using FitnessTracker.BL.Model;
+using Fitness.CMD.Languages;
+using System.Globalization;
+using System.Resources;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("\t\t\tПриложение Fitness\n\t\t\tСоздатель - Aiddam");
-        Console.Write("\n\nВведите имя пользователя - ");
+        var culture = new CultureInfo("en-us");
+        var resourceManager = new ResourceManager("Fitness.CMD.Languages.Messages", typeof(Program).Assembly);
+
+        Console.WriteLine("\t\t\t"+resourceManager.GetString("Hello",culture) + "\n\t\t\t"+resourceManager.GetString("Creator"));
+        Console.WriteLine(resourceManager.GetString("EnterName",culture) +" - ");
 
         var name = Console.ReadLine();
 
