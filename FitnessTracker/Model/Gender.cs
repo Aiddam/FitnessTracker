@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace FitnessTracker.BL.Model
+﻿namespace FitnessTracker.BL.Model
 {
     /// <summary>
     ///     Пол
@@ -9,10 +6,12 @@ namespace FitnessTracker.BL.Model
     [Serializable]
     public class Gender
     {
+        public int Id { get; set; }
         /// <summary>
         /// Название_гендера
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
+        public virtual ICollection<User> Users { get; set; }    
         /// <summary>
         /// Конструктор названия пола
         /// </summary>

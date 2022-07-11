@@ -1,8 +1,4 @@
 ﻿using FitnessTracker.BL.Model;
-using System;
-using System.Runtime.Serialization.Formatters.Binary;
-
-
 namespace FitnessTracker.BL.Controller
 {
     /// <summary>
@@ -14,7 +10,6 @@ namespace FitnessTracker.BL.Controller
         /// Пользователя приложения
         /// </summary>
         public List<User> Users { get; }
-        private const string USER_FILE_NAME = "users.dat";
         public User CurrentUser { get; }
         public bool IsNewUser { get; } = false;
         /// <summary>
@@ -30,13 +25,12 @@ namespace FitnessTracker.BL.Controller
             }
             Users = GetUsersData();
 
-            CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
+            CurrentUser = Users.FirstOrDefault(u => u.Name == userName);
             if (CurrentUser == null)
             {
                 CurrentUser = new User(userName);
                 Users.Add(CurrentUser);
                 IsNewUser = true;
-                Save();
             }
 
         }
@@ -46,7 +40,7 @@ namespace FitnessTracker.BL.Controller
         /// <returns></returns>
         private List<User> GetUsersData()
         {
-            return Load<List<User>>(USER_FILE_NAME) ?? new List<User>();
+            return Load<User>()??new List<User>();
         }
 
         public void SetNewUserData(string genderName, DateTime birthDate, double weight = 1, double height = 1)
@@ -63,7 +57,7 @@ namespace FitnessTracker.BL.Controller
         /// </summary>
         public void Save()
         {
-            Save(USER_FILE_NAME, Users);
+            Save(Users);
           
         }
         /// <summary>

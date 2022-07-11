@@ -15,15 +15,15 @@ class Program
         Console.WriteLine("\t\t\t"+resourceManager.GetString("Hello",culture) + "\n\t\t\t"+resourceManager.GetString("Creator"));
         Console.WriteLine(resourceManager.GetString("EnterName",culture) +" - ");
 
-        var name = Console.ReadLine();
+        var name = ParseString("имя");
 
         var userController = new UserController(name);
         var eatingController = new EatingController(userController.CurrentUser);
         var exerciseController = new ExerciseController(userController.CurrentUser);
         if (userController.IsNewUser)
         {
-            Console.Write("\n\nВведите пол - ");
-            var gender = Console.ReadLine();
+
+            var gender = ParseString("пол");
 
             var birthDate = ParseDateTime("дата рождения");
             var weight = ParseDouble("вес");
@@ -72,6 +72,23 @@ class Program
             }
         }
 
+    }
+
+    private static string ParseString(string Value)
+    {
+        while (true)
+        {
+            Console.Write("Введите " + Value + ": ");
+            string  value = Console.ReadLine();
+            if (!(String.IsNullOrWhiteSpace(value)))
+            {
+                return value;
+            }
+            else
+            {
+                Console.WriteLine("Введите коректное  "+Value);
+            }
+        }
     }
 
     private static (DateTime Begin,DateTime End,Activity Activity) EnterExercise()

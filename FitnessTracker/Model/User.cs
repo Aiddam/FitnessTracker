@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace FitnessTracker.BL.Model
+﻿namespace FitnessTracker.BL.Model
 {
     #region Характеристика пользователя
     /// <summary>
@@ -10,14 +7,16 @@ namespace FitnessTracker.BL.Model
     [Serializable]
     public class User
     {
+        public int Id { get; set; }
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
+        public int? GenderId { get; set; }
         /// <summary>
         /// Пол
         /// </summary>
-        public Gender Gender { get; set; }
+        public virtual Gender Gender { get; set; }
         /// <summary>
         /// Дата рождения
         /// </summary>
@@ -30,6 +29,8 @@ namespace FitnessTracker.BL.Model
         /// Рост
         /// </summary>
         public double Height { get; set; }
+        public virtual ICollection<Eating> Eatings { get; set; }
+        public virtual ICollection<Exercise> Exercises { get; set; }
         public int Age { get { return (DateTime.Now.Year - BirthDate.Year); } }
         #endregion
         /// <summary>
@@ -75,6 +76,7 @@ namespace FitnessTracker.BL.Model
             Weight = weight;
             Height = height;
         }
+        public User() { }
         public User(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

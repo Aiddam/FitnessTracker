@@ -1,39 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FitnessTracker.BL.Controller
+﻿namespace FitnessTracker.BL.Controller
 {
     public abstract class ControllerBase
     {
         /// <summary>
-        /// Сохранить данные пользователя
+        /// интерфейс для разных сохранений
         /// </summary>
-        protected void Save(string FileName,object item)
+        protected readonly IDataSaver manager = new DataBaseDataSaver();
+
+        protected void Save<T>(List<T> item) where T : class
         {
-            var formatter = new BinaryFormatter();
-            using (var fileStream = new FileStream(FileName, FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fileStream, item);
-            }
+            manager.Save(item);
         }
-        protected T Load <T>(string FileName)
+        protected  List<T> Load<T>() where T : class
         {
-            var formatter = new BinaryFormatter();
-            using (var fileStream = new FileStream(FileName, FileMode.OpenOrCreate))
-            {
-                if (fileStream.Length > 0 && formatter.Deserialize(fileStream) is T items)
-                {
-                    return items;
-                }
-                else
-                {
-                    return default(T);
-                }
-            }
+            return manager.Load<T>();
         }
+
     }
 }
