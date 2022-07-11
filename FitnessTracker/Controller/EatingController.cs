@@ -5,8 +5,8 @@ namespace FitnessTracker.BL.Controller
     {
         
         private readonly User user;
-        public List<Food> Foods { get; }
-        public Eating Eating { get; }    
+        public List<Food> Foods { get; set; }
+        public Eating Eating { get; set; }    
 
         public EatingController(User user)
         {
@@ -33,6 +33,7 @@ namespace FitnessTracker.BL.Controller
         }
         private Eating GetEatings()
         {
+
             return Load<Eating>().FirstOrDefault() ?? new Eating(user);
         }
 
@@ -45,6 +46,8 @@ namespace FitnessTracker.BL.Controller
         /// </summary>
         public void Save()
         {
+            //var saveFoods = new List<Food>() { Foods}
+            //var saveActivity =
             Save(Foods);
             Save(new List<Eating>() { Eating });
         }

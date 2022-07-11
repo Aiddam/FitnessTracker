@@ -25,7 +25,7 @@ namespace FitnessTracker.BL.Controller
             }
             Users = GetUsersData();
 
-            CurrentUser = Users.FirstOrDefault(u => u.Name == userName);
+            CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
             if (CurrentUser == null)
             {
                 CurrentUser = new User(userName);
@@ -57,7 +57,8 @@ namespace FitnessTracker.BL.Controller
         /// </summary>
         public void Save()
         {
-            Save(Users);
+            List<User> users = new List<User>() {CurrentUser };
+            Save(users);
           
         }
         /// <summary>

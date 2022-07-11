@@ -13,7 +13,7 @@ namespace FitnessTracker.BL.Controller
             Activities = GetAllActivities();
         }
 
-        private List<Activity>? GetAllActivities()
+        private List<Activity> GetAllActivities()
         {
             return Load<Activity>() ?? new List<Activity>();
         }
@@ -40,7 +40,7 @@ namespace FitnessTracker.BL.Controller
         }
         private void Save()
         {
-            Save( Exercises);
+            Save(Exercises);
             Save(Activities);
         }
     }

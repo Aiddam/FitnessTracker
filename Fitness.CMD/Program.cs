@@ -7,13 +7,16 @@ using System.Resources;
 
 class Program
 {
+
     static void Main(string[] args)
     {
+        
         var culture = new CultureInfo("ru-ru");
         var resourceManager = new ResourceManager("Fitness.CMD.Languages.Messages", typeof(Program).Assembly);
 
         Console.WriteLine("\t\t\t"+resourceManager.GetString("Hello",culture) + "\n\t\t\t"+resourceManager.GetString("Creator"));
         Console.WriteLine(resourceManager.GetString("EnterName",culture) +" - ");
+        
 
         var name = ParseString("имя");
 

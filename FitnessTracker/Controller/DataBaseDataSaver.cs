@@ -6,8 +6,8 @@
         {
             using (var db = new FitnessContext() )
             {
-                return (db.Set<T>().Where(x => true).ToList());
-                
+                var result = db.Set<T>().Where(x => true).ToList();
+                return result;
             }
         }
 
@@ -19,5 +19,6 @@
                 db.SaveChanges();
             }
         }
+       
     }
 }

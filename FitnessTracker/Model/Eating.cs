@@ -10,7 +10,7 @@
         public DateTime Moment { get; set; }
         public Dictionary<Food,double> Foods { get; set; }
         public int UserId { get; set; }
-        public virtual User User { get; set; }
+        protected virtual User User { get; set; }
         public Eating() { }
         public Eating(User user)
         {

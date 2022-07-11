@@ -11,12 +11,13 @@
         /// Название_гендера
         /// </summary>
         public string Name { get; set; }
-        public virtual ICollection<User> Users { get; set; }    
+        protected virtual ICollection<User> Users { get; set; }
         /// <summary>
         /// Конструктор названия пола
         /// </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"></exception>
+        public Gender() { }
         public Gender(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
