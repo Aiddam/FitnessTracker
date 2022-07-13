@@ -15,7 +15,6 @@ class Program
         var resourceManager = new ResourceManager("Fitness.CMD.Languages.Messages", typeof(Program).Assembly);
 
         Console.WriteLine("\t\t\t"+resourceManager.GetString("Hello",culture) + "\n\t\t\t"+resourceManager.GetString("Creator"));
-        Console.WriteLine(resourceManager.GetString("EnterName",culture) +" - ");
         
 
         var name = ParseString("имя");
@@ -25,12 +24,9 @@ class Program
         var exerciseController = new ExerciseController(userController.CurrentUser);
         if (userController.IsNewUser)
         {
-
             var gender = ParseString("пол");
-
             var birthDate = ParseDateTime("дата рождения");
             var weight = ParseDouble("вес");
-
             var height = ParseDouble("рост");
 
             userController.SetNewUserData(gender, birthDate, weight, height);
@@ -43,11 +39,14 @@ class Program
         {
             Console.WriteLine("Что вы хотите сделать?");
             Console.WriteLine("E - ввести прием пищи!");
-            Console.WriteLine("A - ввести уражнения!");
+            Console.WriteLine("F - ввести уражнения!");
+            Console.WriteLine("D - посмотреть информацию о приемах пищи!");
+            Console.WriteLine("C - посмотреть информацию о пользователи!");
             Console.WriteLine("Q - выход!");
 
             Console.WriteLine();
             var key = Console.ReadKey();
+            Console.WriteLine();
             switch (key.Key)
             {
                 case ConsoleKey.E:
@@ -59,12 +58,36 @@ class Program
                         Console.WriteLine($"\t{item.Key} - {item.Value}");
                     }
                     break;
-                case ConsoleKey.A:
+                case ConsoleKey.F:
                     var exe = EnterExercise();
                     exerciseController.Add(exe.Activity, exe.Begin, exe.End);
                     foreach (var item in exerciseController.Exercises)
                     {
                         Console.WriteLine($"{item.Activity} с {item.Start.ToShortTimeString()} до {item.Finish.ToShortTimeString()}");
+                    }
+                    break;
+                case ConsoleKey.D:
+                    int i = 1;
+                    foreach (var item in eatingController.Foods)
+                    {
+                        
+                        Console.WriteLine($"{i} - {item.Name}\n" +
+                                          $"Протеинов - {item.Proteins}\n" +
+                                          $"Жиров - {item.Fats}\n" +
+                                          $"Углеводов - {item.Carbohydrats}\n" +
+                                          $"Калориев - {item.Calories}\n");
+                        i++;
+                    }
+                    break;
+                case ConsoleKey.C:
+                    foreach (var item in userController.Users)
+                    {
+                        Console.WriteLine($"{item.Id}: {item.Name}\n" +
+                                          $"Возраст: {item.Age}\n" +
+                                          $"Дата рождения: {item.BirthDate}\n" +
+                                          $"Пол: {item.Gender}\n" +
+                                          $"Рост: {item.Height}\n" +
+                                          $"Вес: {item.Weight}\n");
                     }
                     break;
 

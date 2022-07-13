@@ -5,7 +5,7 @@
         /// <summary>
         /// интерфейс для разных сохранений
         /// </summary>
-        protected readonly IDataSaver manager = new DataBaseDataSaver();
+        protected readonly IDataSaver manager = new SerializeDataSaver();
 
         protected void Save<T>(List<T> item) where T : class
         {

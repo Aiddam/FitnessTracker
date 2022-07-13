@@ -1,7 +1,7 @@
 ﻿using FitnessTracker.BL.Model;
 namespace FitnessTracker.BL.Controller
 {
-    public class EatingController : ControllerBase
+    public class EatingController : ControllerBase 
     {
         
         private readonly User user;
